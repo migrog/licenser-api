@@ -1,0 +1,15 @@
+{
+    "mongo": {
+        "connectionString": "mongodb://mongo:27017",
+        "database": "license_db",
+        "licenseCollection": " licenses"
+    },
+    "userApi": {
+        "baseURL": "http://security:3000",
+        "users": "/api/users/%s"
+    },
+    "productApi": {
+        "baseURL": "http://product:3001",
+        "products": "/api/products/%s"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "mongo": {
+        "connectionString": "mongodb://mongo:27017",
+        "database": "product_db",
+        "productCollection": " products"
+    }
+}

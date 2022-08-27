@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  security:
+    container_name: security-api
+    build:
+      context: .
+      dockerfile: security/Dockerfile
+    image: security-api
+    restart: always
+    environment:
+      - ENVIRONMENT=staging
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql8
+    networks:
+      - licenser_net
+  
+  product:
+    container_name: product-api
+    build:
+      context: .
+      dockerfile: product/Dockerfile
+    image: product-api
+    restart: always
+    environment:
+      - ENVIRONMENT=staging
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongo
+    networks:
+      - licenser_net
+  
+  license:
+    container_name: license-api
+    build:
+      context: .
+      dockerfile: license/Dockerfile
+    image: license-api
+    restart: always
+    environment:
+      - ENVIRONMENT=staging
+    ports:
+      - "3002:3002"
+    depends_on:
+      - security
+      - product
+      - mongo
+    networks:
+      - licenser_net
+
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    volumes:
+      - ./.docker/data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - licenser_net
+  mysql8:
+    container_name: mysql
+    image: mysql:8.0
+    restart: always
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=security_db
+      - MYSQL_ROOT_PASSWORD=secret
+    ports:
+      - "3306:3306"
+    networks:
+      - licenser_net
+
+networks:
+  licenser_net:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
+  

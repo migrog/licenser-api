@@ -1,0 +1,11 @@
+{
+    "database": {
+        "driver": "mysql",
+        "mysql": {
+            "connection": "root:secret@tcp(127.0.0.1:3306)/security_db?charset=utf8mb4&parseTime=True&loc=Local"
+        }
+    },
+    "jwt": {
+        "secret": "secret"
+    }
+}
